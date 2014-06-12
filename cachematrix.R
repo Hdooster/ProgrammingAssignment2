@@ -1,4 +1,5 @@
 makeCacheMatrix <- function(x = matrix()) {
+  ##this function makes a list: a matrix and its inverse (IF that inverse has already been solved)
   
   ##Everytime a new matrix is 'made' delete the inverse
   matrix_inverse <- NULL
@@ -15,7 +16,7 @@ makeCacheMatrix <- function(x = matrix()) {
   ##output the matrix's inverse
   getInverse <- function() matrix_inverse
   
-  ##set the matrix's inverse outside of the scope of the following function (<<-)
+  ##set the matrix's inverse, outside of the scope of the following function (<<-)
   setInverse <- function(new_inverse) matrix_inverse <<- new_inverse
   
   ##this is the list
@@ -25,8 +26,12 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 cacheSolve <- function(x, ...) {
+  ##this function takes the matrix 'x', and goes to check if we know its inverse already. 
+  ##If we don't, we calculate it here and then store it with 'x' through use of the function above.
+  
+  ##Go check what's stored as the inverse of x
   ouputter_matrix_inverse <- x$getInverse()
-  if(!is.null(outputter_matrix_inverse)) {
+  if(!is.null(outputter_matrix_inverse)) { ##if there's an inverse already calculated and stored, return it.
     message("grabbing matrix's inverse ")
     ##return the known inverse
     return(outputter_matrix_inverse)
@@ -38,5 +43,6 @@ cacheSolve <- function(x, ...) {
   #... and solve it's inverse
   outputter_matrix_inverse <- solve(data, ...)
   x$setInverse(outputter_matrix_inverse)
+  ##now output it.
   outputter_matrix_inverse
 }
